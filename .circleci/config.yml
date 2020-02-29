@@ -399,7 +399,7 @@ jobs:
 
       - type: cache-restore
         name: "Ruby dependencies: cache restore"
-        key: cache-{{ .Environment.CACHE_VERSION }}-gems-{{ checksum "Gemfile.lock" }}
+        key: cache-{{ .Environment.CACHE_VERSION }}-gems-{{ checksum "Gemfile.next.lock" }}
 
       - run:
           name: "Ruby dependencies: install"
@@ -410,7 +410,7 @@ jobs:
 
       - type: cache-save
         name: "Ruby dependencies: cache save"
-        key: cache-{{ .Environment.CACHE_VERSION }}-gems-{{ checksum "Gemfile.lock" }}
+        key: cache-{{ .Environment.CACHE_VERSION }}-gems-{{ checksum "Gemfile.next.lock" }}
         paths:
           - ~/.cache/bundle
 

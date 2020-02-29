@@ -10,7 +10,6 @@ jobs:
       RACK_ENV: test
       COVERAGE: true
       DISABLE_SPRING: true
-      TRANSLATION_BRANCH: master
       TZ: /usr/share/zoneinfo/America/Chicago
 
     docker:
@@ -161,12 +160,6 @@ jobs:
         paths:
           - ~/.cache/bundle
 
-
-      - run:
-          name: Sync translations (only on master by default)
-          command: bin/check_translations
-
-
       - type: cache-restore
         name: "Node dependencies: cache restore"
         key: cache-{{ .Environment.CACHE_VERSION }}-yarn-{{ checksum "yarn.lock" }}
@@ -260,47 +253,8 @@ jobs:
       - store_artifacts:
           path: test-artifacts
 
-  upload-coverage:
-    docker:
-      - image: circleci/ruby:2.5.5-stretch-node
-    environment:
-      CC_TEST_REPORTER_ID: 04daa6564351115dc1515504790cd379ad8dc25e7778f0641e0f8c63185f887c
-    working_directory: ~/bikeindex/bike_index
-
-    steps:
-      - attach_workspace:
-          at: ~/bikeindex/bike_index
-      - run:
-          name: Install Code Climate Test Reporter
-          command: |
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            chmod +x ./cc-test-reporter
-      - run:
-          command: |
-            ./cc-test-reporter sum-coverage --output - codeclimate.*.json | ./cc-test-reporter upload-coverage --debug --input -
-
-  deploy_production:
-    machine:
-      enabled: true
-    working_directory: ~/bikeindex/bike_index
-    steps:
-      - checkout
-      - run:
-          name: Deploying to Cloud66 production
-          command: |
-            curl -X POST -d "" https://hooks.cloud66.com/stacks/redeploy/${CLOUD66_REDEPLOYMENT_PATH}
-
 workflows:
   version: 2
   commit:
     jobs:
       - build
-      - upload-coverage:
-          requires:
-            - build
-      - deploy_production:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master

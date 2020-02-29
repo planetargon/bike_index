@@ -19,9 +19,18 @@ else
 end
 
 # Dual Boot Setup Gem
-gem 'ten_years_rails', '~> 1.0', '>= 1.0.2'
+if next?
+  # gem 'ten_years_rails', '~> 1.0', '>= 1.0.2'
+else
+  gem 'ten_years_rails', '~> 1.0', '>= 1.0.2'
+end
 
-gem "active_model_serializers", "~> 0.9.3"
+if next?
+  gem "active_model_serializers"
+else
+  gem "active_model_serializers", "~> 0.9.3"
+end
+
 gem "bcrypt", "~> 3.1.7"
 gem "bootsnap"
 gem "jquery-rails"
@@ -93,7 +102,13 @@ gem "twitter" # Twitter. For rendering tweets
 
 # OAuth provider, Grape, associated parts of API V2
 gem "api-pagination"
-gem "doorkeeper", "5.2.3"
+
+if next?
+  gem "doorkeeper"
+else
+  gem "doorkeeper", "5.2.3"
+end
+
 gem "grape", "~> 0.19.1"
 gem "grape-active_model_serializers", "~> 1.4.0"
 gem "grape-swagger", "0.11"
@@ -123,7 +138,12 @@ gem "memory_profiler", require: false
 gem "rack-mini-profiler", require: false # If you can't see it you can't make it better
 gem "stackprof", require: false
 
-gem "responders", "~> 2.0" # required because of class level respond_to blocks (API v1)
+if next?
+  gem 'responders'
+else
+  gem "responders", "~> 2.0" # required because of class level respond_to blocks (API v1)
+end
+
 gem "thor"
 
 gem "bundler", ">= 1.8.4" # required for rails-assets.org - JS and CSS assets
@@ -175,7 +195,13 @@ group :development, :test do
   gem "rspec", "~> 3.4"
   gem "rspec-rails", "~> 3.8"
   gem "rspec_junit_formatter" # For circle ci
-  gem "rubocop", "~> 0.67", require: false
+
+  if next?
+    gem "rubocop"
+  else
+    gem "rubocop", "~> 0.67", require: false
+  end
+
   gem "rubocop-daemon", "~> 0.3.1", require: false
   gem "rubocop-performance", "~> 1.1.0", require: false
   gem "rufo", "~> 0.7.0", require: false

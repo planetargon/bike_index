@@ -1,3 +1,6 @@
+def next?
+  File.basename(__FILE__) == "Gemfile.next"
+end
 # frozen_string_literal: true
 
 source "https://rubygems.org"
@@ -8,7 +11,13 @@ git_source(:gitlab) { |repo| "https://gitlab.com/#{repo}.git" }
 # Update Vagrantfile and CircleCI config if Ruby version is bumped
 ruby "2.5.5"
 gem "rack", "2.0.8"
-gem "rails", "5.2.4"
+
+if next?
+  gem 'rails', '~> 6.0', '>= 6.0.2.1'
+else
+  gem "rails", "5.2.4"
+end
+
 # Dual Boot Setup Gem
 gem 'ten_years_rails', '~> 1.0', '>= 1.0.2'
 

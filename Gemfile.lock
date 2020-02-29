@@ -622,6 +622,9 @@ GEM
     stripe (3.3.2)
       faraday (~> 0.9)
     temple (0.8.2)
+    ten_years_rails (1.0.2)
+      actionview (~> 5.2.3)
+      rainbow (~> 3.0.0)
     terminal-notifier (2.0.0)
     terminal-table (1.8.0)
       unicode-display_width (~> 1.1, >= 1.1.1)
@@ -805,6 +808,7 @@ DEPENDENCIES
   stackprof
   stripe (~> 3.3.2)
   swagger-ui_rails!
+  ten_years_rails (~> 1.0, >= 1.0.2)
   terminal-notifier
   thor
   translation
